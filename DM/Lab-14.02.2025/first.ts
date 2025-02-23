@@ -1,84 +1,106 @@
 const test1 = [
-	[0, 2, 0, 0, 0],
-	[2, 0, 6, 0, 0],
-	[0, 6, 0, 10, 0],
-	[0, 0, 10, 0, 5],
-	[0, 0, 0, 5, 0],
+	[0, 1, 2],
+	[1, 0, 3],
+	[2, 3, 0],
 ];
-
+const test2 = [
+	[0, 2, 0, 6],
+	[2, 0, 3, 8],
+	[0, 3, 0, 0],
+	[6, 8, 0, 0],
+];
+const test3 = [
+	[0, 2, 0, 6, 0],
+	[2, 0, 3, 8, 5],
+	[0, 3, 0, 0, 7],
+	[6, 8, 0, 0, 9],
+	[0, 5, 7, 9, 0],
+];
+const test4 = [
+	[0, 1, 1, 1],
+	[1, 0, 1, 1],
+	[1, 1, 0, 1],
+	[1, 1, 1, 0],
+];
+const test5 = [
+	[0, 4, 0, 0, 0, 2],
+	[4, 0, 8, 0, 0, 3],
+	[0, 8, 0, 7, 0, 1],
+	[0, 0, 7, 0, 9, 0],
+	[0, 0, 0, 9, 0, 5],
+	[2, 3, 1, 0, 5, 0],
+];
+const test6 = [
+	[0, 1, 2, 100],
+	[1, 0, 3, 4],
+	[2, 3, 0, 5],
+	[100, 4, 5, 0],
+];
+const test7 = [
+	[0, 1, 1, 0, 0],
+	[1, 0, 1, 1, 0],
+	[1, 1, 0, 1, 1],
+	[0, 1, 1, 0, 1],
+	[0, 0, 1, 1, 0],
+];
+const test8 = [
+	[0, 7, 0, 5, 0, 0, 0],
+	[7, 0, 8, 9, 7, 0, 0],
+	[0, 8, 0, 0, 5, 0, 0],
+	[5, 9, 0, 0, 15, 6, 0],
+	[0, 7, 5, 15, 0, 8, 9],
+	[0, 0, 0, 6, 8, 0, 11],
+	[0, 0, 0, 0, 9, 11, 0],
+];
+type VerConnect = {
+	vertex: number;
+	weight: number;
+};
 function Algorithm1(matrix: number[][]) {
-	const conArray = new Map<number, number[][]>();
+	const conArray: VerConnect[][] = [];
 	const resArray: number[] = [];
-	const weightArray: number[] = [];
+	const checkArray: boolean[] = new Array(matrix.length).fill(false);
 
 	for (let i: number = 0; i < matrix.length; i++) {
-		conArray.set(i + 1, []);
+		conArray.push([]);
 		for (let j = 0; j < matrix.length; j++) {
 			const element = matrix[i][j];
 			if (element !== 0) {
-				conArray.get(i + 1)?.push([j + 1, element]);
+				conArray[i].push({vertex: j, weight: element});
 			}
 		}
 	}
-	console.log(conArray);
+	checkArray[0] = true;
+	while (resArray.length < matrix.length - 1) {
+		let minEdge: VerConnect | null = null;
 
-	for (const [key, value] of conArray) {
-		value.sort((a, b) => a[1] - b[1]);
-		if (resArray.indexOf(key) === -1) {
-			resArray.push(key);
-		}
-		const minArr: number[] = [];
-		let minElem: number = 0;
-		for (let i = 0; i < value.length; i++) {
-			const element = value[i];
-			if (resArray.indexOf(element[0]) === -1) {
-				minArr.push(value[i][1]);
-				resArray.push(element[0]);
-				minElem = Math.min(...minArr);
+		for (let i = 0; i < matrix.length; i++) {
+			if (checkArray[i]) {
+				for (let j = 0; j < conArray[i].length; j++) {
+					const edge = conArray[i][j];
+					if (
+						!checkArray[edge.vertex] &&
+						(minEdge === null || edge.weight < minEdge.weight)
+					) {
+						minEdge = edge;
+					}
+				}
 			}
 		}
-		if (minElem !== 0) {
-			weightArray.push(minElem);
+
+		if (minEdge !== null) {
+			resArray.push(minEdge.weight);
+			checkArray[minEdge.vertex] =true;
 		}
 	}
-	console.log(resArray);
-	console.log(weightArray);
-	console.log(weightArray.reduce((acc, cur)=> acc+cur,0));
+	console.log(resArray.reduce((acc,cur)=> acc + cur, 0));
+	
 }
 Algorithm1(test1);
-
-// 	const origArray = new Array<number>();
-// 	const conArray: Vertex[] = [];
-// 	const weightArray: number[] = [];
-// 	const vertexArray: number[] = [];
-
-// 	for (let i = 0; i < matrix.length; i++) {
-// 		const row = matrix[i];
-// 		origArray.push(i);
-// 		conArray.push({name: i + 1, weight: [], connect: []});
-// 		for (let j = 0; j < row.length; j++) {
-// 			const element = matrix[i][j];
-// 			if (element !== 0) {
-// 				conArray[i].connect.push(j + 1);
-// 				conArray[i].weight.push(element);
-// 			}
-// 		}
-// 	}
-// 	console.log(conArray);
-// 	let resWeight: number = 0;
-// 	for (let i = 0; i < conArray.length; i++) {
-// 		if (vertexArray.indexOf(conArray[i].name) === -1) {
-// 			vertexArray.push(conArray[i].name);
-// 		}
-// 		let weightMin: number = 0;
-// 		for (let j = 0; j < conArray.length; j++) {
-// 			const element: number = conArray[i].connect[j];
-// 			// if (vertexArray.indexOf(element) === -1) {}
-
-// 		}
-// 		// if (vertexArray.indexOf(element) === -1) {
-// 		// vertexArray.push(element);
-// 		// weightArray.push(weightMin);
-// 		// }
-// 	}
-// 	console.log(vertexArray);
+Algorithm1(test2);
+Algorithm1(test3);
+Algorithm1(test4);
+Algorithm1(test5);
+Algorithm1(test6);
+Algorithm1(test7);
+Algorithm1(test8);
