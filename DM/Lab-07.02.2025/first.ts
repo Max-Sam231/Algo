@@ -110,12 +110,12 @@ function Algorithm1(matrix: number[][]) {
 	console.log('Количество компонент-связности ' + res);
 }
 
-Algorithm1(test1);
-Algorithm1(test2);
-Algorithm1(test3);
-Algorithm1(test4);
-Algorithm1(test5);
-Algorithm1(test6);
-Algorithm1(test7);
-Algorithm1(test8);
+// Algorithm1(test1);
+// Algorithm1(test2);
+// Algorithm1(test3);
+// Algorithm1(test4);
+// Algorithm1(test5);
+// Algorithm1(test6);
+// Algorithm1(test7);
+// Algorithm1(test8);
 

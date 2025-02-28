@@ -56,7 +56,7 @@ type VerConnect = {
 	vertex: number;
 	weight: number;
 };
-function Algorithm1(matrix: number[][]) {
+function AlgorithmPrima(matrix: number[][]) {
 	const conArray: VerConnect[][] = [];
 	const resArray: number[] = [];
 	const checkArray: boolean[] = new Array(matrix.length).fill(false);
@@ -90,17 +90,16 @@ function Algorithm1(matrix: number[][]) {
 
 		if (minEdge !== null) {
 			resArray.push(minEdge.weight);
-			checkArray[minEdge.vertex] =true;
+			checkArray[minEdge.vertex] = true;
 		}
 	}
-	console.log(resArray.reduce((acc,cur)=> acc + cur, 0));
-	
+	console.log(resArray.reduce((acc, cur) => acc + cur, 0));
 }
-Algorithm1(test1);
-Algorithm1(test2);
-Algorithm1(test3);
-Algorithm1(test4);
-Algorithm1(test5);
-Algorithm1(test6);
-Algorithm1(test7);
-Algorithm1(test8);
+AlgorithmPrima(test1);
+AlgorithmPrima(test2);
+AlgorithmPrima(test3);
+AlgorithmPrima(test4);
+AlgorithmPrima(test5);
+AlgorithmPrima(test6);
+AlgorithmPrima(test7);
+AlgorithmPrima(test8);

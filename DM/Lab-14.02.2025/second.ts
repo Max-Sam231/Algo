@@ -53,15 +53,16 @@ const test8 = [
 	[0, 0, 0, 0, 9, 11, 0],
 ];
 
-type Edge = {
+export type Edge = {
 	start: number;
 	end: number;
 	weight: number;
 };
 
-function Algorithm2(matrix: number[][]) {
+export function AlgorithmKruscal(matrix: number[][]) {
 	const edgeArray: Edge[] = [];
 	const resArray: number[] = [];
+	const resArrayEdge: Edge[] = [];
 
 	for (let i = 0; i < matrix.length; i++) {
 		for (let j = 0; j < matrix.length; j++) {
@@ -87,17 +88,20 @@ function Algorithm2(matrix: number[][]) {
 
 		if (start !== end) {
 			resArray.push(edge.weight);
+			resArrayEdge.push({start: edge.start, end: edge.end, weight: edge.weight});
 			conArray[end] = start;
 		}
 	}
 	// console.log(resArray);
-	console.log(resArray.reduce((acc, cur) => acc + cur, 0));
+	// console.log(resArray.reduce((acc, cur) => acc + cur, 0));
+	return resArrayEdge;
 }
-Algorithm2(test1);
-Algorithm2(test2);
-Algorithm2(test3);
-Algorithm2(test4);
-Algorithm2(test5);
-Algorithm2(test6);
-Algorithm2(test7);
-Algorithm2(test8);
+
+// AlgorithmKruscal(test1);
+// AlgorithmKruscal(test2);
+// AlgorithmKruscal(test3);
+// AlgorithmKruscal(test4);
+// AlgorithmKruscal(test5);
+// AlgorithmKruscal(test6);
+// AlgorithmKruscal(test7);
+// AlgorithmKruscal(test8);
